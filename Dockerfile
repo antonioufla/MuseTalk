@@ -1,6 +1,6 @@
 # MuseTalk - RunPod Serverless
 # Base: pytorch oficial do Docker Hub (CUDA 12.1)
-# Updated: 2026-03-04 12:00 - Added mmpose dependencies
+# Updated: 2026-03-04 13:00 - Fix mmpose: use wheel direto (mim install era instavel)
 FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -48,10 +48,11 @@ RUN pip install --upgrade pip setuptools wheel && \
     imageio[ffmpeg] \
     python-magic
 
-# Instalar mmpose/mmcv/mmdet separadamente (dependências complexas)
-RUN pip install --no-cache-dir openmim && \
-    mim install mmcv==2.2.0 mmdet==3.3.0 --yes && \
-    pip install --no-cache-dir mmpose==1.3.2 --no-build-isolation
+# Instalar mmcv via wheel oficial (mim install e instavel no build)
+# Wheel especifico para PyTorch 2.1.0 + CUDA 12.1
+RUN pip install --no-cache-dir \
+    mmcv==2.2.0 -f https://download.openmmlab.com/mmcv/dist/cu121/torch2.1.0/index.html && \
+    pip install --no-cache-dir mmdet==3.3.0 mmpose==1.3.2
 
 # Baixar pesos na build (evita cold start lento)
 RUN mkdir -p models/musetalk models/musetalkV15 models/syncnet models/dwpose models/face-parse-bisent models/sd-vae models/whisper && \
