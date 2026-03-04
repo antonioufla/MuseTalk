@@ -45,7 +45,10 @@ RUN pip install --upgrade pip && \
     gdown \
     requests \
     imageio[ffmpeg] \
-    python-magic
+    python-magic \
+    mmpose \
+    mmcv \
+    mmdet
 
 # Baixar pesos na build (evita cold start lento)
 RUN mkdir -p models/musetalk models/musetalkV15 models/syncnet models/dwpose models/face-parse-bisent models/sd-vae models/whisper && \
