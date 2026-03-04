@@ -1,5 +1,6 @@
 # MuseTalk - RunPod Serverless
 # Base: pytorch oficial do Docker Hub (CUDA 12.1)
+# Updated: 2026-03-04 12:00 - Added mmpose dependencies
 FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
 
 ENV DEBIAN_FRONTEND=noninteractive \
