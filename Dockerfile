@@ -49,7 +49,9 @@ RUN pip install --upgrade pip setuptools wheel && \
     python-magic
 
 # Instalar mmengine, mmcv, mmdet, mmpose via openmim (método oficial OpenMMLab)
+# chumpy (dep do mmpose) tem setup.py antigo com "import pip"; instalar sem isolamento antes
 RUN pip install --no-cache-dir openmim && \
+    pip install --no-build-isolation chumpy && \
     mim install "mmengine>=0.10.1" && \
     mim install "mmcv==2.2.0" && \
     mim install "mmdet==3.3.0" && \
