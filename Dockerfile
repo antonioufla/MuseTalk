@@ -27,9 +27,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copiar projeto
 COPY . /workspace
 
-# Instalar dependências Python (setuptools/wheel para pkg_resources requerido pelo mmcv) + openmim para wheels precompilados
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir setuptools wheel openmim && \
+# Instalar dependências Python (evitar conflitos na build)
+RUN pip install --upgrade pip setuptools wheel && \
     pip install --no-cache-dir \
     runpod==1.6.2 \
     huggingface_hub==0.30.2 \
@@ -47,9 +46,12 @@ RUN pip install --upgrade pip && \
     gdown \
     requests \
     imageio[ffmpeg] \
-    python-magic && \
-    mim install mmcv==2.2.0 mmdet==3.3.0 mmpose==1.3.2 && \
-    pip install --no-cache-dir mmcv==2.2.0 mmdet==3.3.0 mmpose==1.3.2
+    python-magic
+
+# Instalar mmpose/mmcv/mmdet separadamente (dependências complexas)
+RUN pip install --no-cache-dir openmim && \
+    mim install mmcv==2.2.0 mmdet==3.3.0 --yes && \
+    pip install --no-cache-dir mmpose==1.3.2 --no-build-isolation
 
 # Baixar pesos na build (evita cold start lento)
 RUN mkdir -p models/musetalk models/musetalkV15 models/syncnet models/dwpose models/face-parse-bisent models/sd-vae models/whisper && \
