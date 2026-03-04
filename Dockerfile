@@ -1,6 +1,6 @@
 # MuseTalk - RunPod Serverless
 # Base: pytorch oficial do Docker Hub (CUDA 12.1)
-# Updated: 2026-03-04 21:30 - Fix mmpose: usar openmim (método oficial)
+# Updated: 2026-03-04 - Fix mmcv: mmdet requer mmcv>=2.0.0rc4,<2.2.0 → usar 2.1.0
 FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -53,7 +53,7 @@ RUN pip install --upgrade pip setuptools wheel && \
 RUN pip install --no-cache-dir openmim && \
     pip install --no-build-isolation chumpy && \
     mim install "mmengine>=0.10.1" && \
-    mim install "mmcv==2.2.0" && \
+    mim install "mmcv==2.1.0" && \
     mim install "mmdet==3.3.0" && \
     mim install "mmpose==1.3.2"
 
