@@ -48,7 +48,8 @@ RUN pip install --upgrade pip && \
     requests \
     imageio[ffmpeg] \
     python-magic && \
-    mim install mmcv==2.2.0 mmdet==3.3.0 mmpose==1.3.2
+    mim install mmcv==2.2.0 mmdet==3.3.0 mmpose==1.3.2 && \
+    pip install --no-cache-dir mmcv==2.2.0 mmdet==3.3.0 mmpose==1.3.2
 
 # Baixar pesos na build (evita cold start lento)
 RUN mkdir -p models/musetalk models/musetalkV15 models/syncnet models/dwpose models/face-parse-bisent models/sd-vae models/whisper && \
