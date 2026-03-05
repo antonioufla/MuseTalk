@@ -32,7 +32,7 @@ def run_inference(image_path: str, audio_path: str, output_dir: str, job_id: str
     result_dir = os.path.join(output_dir, job_id)
     os.makedirs(result_dir, exist_ok=True)
 
-    # inference.py lê video_path/audio_path de um YAML; gerar config dinâmico
+    # inference.py NÃO aceita --video_path/--audio_path na CLI; lê de YAML via --inference_config
     config_path = os.path.join(result_dir, "inference_config.yaml")
     with open(config_path, "w") as f:
         f.write(f"task_0:\n  video_path: \"{image_path}\"\n  audio_path: \"{audio_path}\"\n")
