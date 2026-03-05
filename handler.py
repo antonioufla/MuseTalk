@@ -32,15 +32,18 @@ def run_inference(image_path: str, audio_path: str, output_dir: str, job_id: str
     result_dir = os.path.join(output_dir, job_id)
     os.makedirs(result_dir, exist_ok=True)
 
+    # inference.py lê video_path/audio_path de um YAML; gerar config dinâmico
+    config_path = os.path.join(result_dir, "inference_config.yaml")
+    with open(config_path, "w") as f:
+        f.write(f"task_0:\n  video_path: \"{image_path}\"\n  audio_path: \"{audio_path}\"\n")
+
     cmd = [
         "python3", "-m", "scripts.inference",
-        "--inference_config", "./configs/inference/test.yaml",
+        "--inference_config", config_path,
         "--result_dir", result_dir,
         "--unet_model_path", UNET_MODEL_PATH,
         "--unet_config", UNET_CONFIG,
         "--version", "v15",
-        "--video_path", image_path,
-        "--audio_path", audio_path,
     ]
 
     proc = subprocess.run(
