@@ -66,7 +66,7 @@ def run_inference(image_path: str, audio_path: str, output_dir: str, job_id: str
 
 def handler(job):
     """Handler principal do RunPod."""
-    print("[MuseTalk] handler v2 - YAML config fix ativo (2026-03-04)")
+    print("[MuseTalk] handler v3 - YAML config fix ativo (2026-03-05)")
     job_input = job.get("input", {})
 
     # Obter URLs
